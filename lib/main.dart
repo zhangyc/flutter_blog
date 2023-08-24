@@ -1,10 +1,12 @@
 import 'package:blog/mobile/creation/creation_blog.dart';
 import 'package:blog/mobile/routes.dart';
+import 'package:blog/mobile/user/login_page.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import 'app_constants.dart';
 import 'mobile/main/main_page.dart';
@@ -35,18 +37,31 @@ class MyApp extends StatelessWidget {
     return MultiProvider(providers: [
         ChangeNotifierProvider(create: (c)=>UserProvider()),
       ],
-      child: MaterialApp(
-        title: 'Rhymes IO',
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          useMaterial3: true,
-        ),
-        home: MainPage(),
-        routes: <String, WidgetBuilder>{
-          // '/':(c)=>MainPage(),
-          CreationBlog.routeName:(c)=>CreationBlog(),
+      child: RefreshConfiguration(
+        footerTriggerDistance: 15,
+        dragSpeedRatio: 0.91,
+        headerBuilder: () => MaterialClassicHeader(),
+        footerBuilder: () => ClassicFooter(),
+        enableLoadingWhenNoData: false,
+        enableRefreshVibrate: false,
+        enableLoadMoreVibrate: false,
+        shouldFooterFollowWhenNotFull: (state) {
+          // If you want load more with noMoreData state ,may be you should return false
+          return true;
         },
-        // routerConfig: goRouter,
+        child: MaterialApp(
+          title: 'Rhymes IO',
+          theme: ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            useMaterial3: true,
+          ),
+          home: userToken.isNotEmpty?MainPage():LoginPage(),
+          routes: <String, WidgetBuilder>{
+            // '/':(c)=>MainPage(),
+            CreationBlog.routeName:(c)=>CreationBlog(),
+          },
+          // routerConfig: goRouter,
+        ),
       ),
 
     );

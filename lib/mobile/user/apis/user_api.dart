@@ -28,6 +28,18 @@ class UserApis{
       },
     );
   }
+ //注册
+ static Future<HttpResult> signUpAndSignIn(String email, String pwd,String code) async {
+   return post(
+     "/register",
+     data: {
+
+       'username':email,
+       'password':pwd,
+       'code':code
+     },
+   );
+ }
  // 更新用户头像
  static Future<HttpResult> updateUserAvatar(File  file) async {
    return uploadAvatarImage(file);

@@ -46,9 +46,12 @@ dependencies:
   validated: ^2.0.0
   provider:
   extended_image:
-  image_picker: ^0.8.9
   flutter_quill:
-
+  flutter_keyboard_visibility: ^5.4.1
+  rxdart:
+  image_picker: ^1.0.2
+  flutter_markdown: ^0.6.17+1
+  pull_to_refresh:
 dev_dependencies:
   flutter_test:
     sdk: flutter
